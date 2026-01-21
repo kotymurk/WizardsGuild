@@ -24,6 +24,8 @@ li {
 
 li {
   margin-bottom: 10px;
+  border: 1px solid #674e45;
+  text-align: start;
 }
 
 img {

@@ -50,3 +50,80 @@ body {
   color: rgb(107, 195, 166);
   text-align: center;
 }
+
+.order-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+.order-card img {
+  border-radius: 50%;
+  margin-bottom: 8px;
+}
+
+.order-card h3 {
+  margin: 8px 0;
+}
+
+.order-card p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+button {
+  cursor: pointer;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background: #ffb4b4f7;
+  color: #fff;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #ff7b7bf7;
+}
+
+/* .icon-btn {
+  background: none;
+  color: #333;
+  font-size: 18px;
+} */
+
+.hidden {
+  display: none;
+}
+
+.my-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(254, 186, 76, 0.118);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}

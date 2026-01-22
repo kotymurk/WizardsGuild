@@ -1,73 +1,129 @@
 const API = 'http://localhost:4000';
 
-const ordersList = document.getElementById('orders');
+document.addEventListener('DOMContentLoaded', () => {
+  const ordersList = document.getElementById('orders');
 
-//получение заказов
-function getOrders() {
-  fetch(`${API}/orders`)
-    .then((res) => res.json())
-    .then((orders) => {
-      ordersList.innerHTML = '';
+  //модалочка
+  const modal = document.getElementById('confirmModal');
+  const closeBtn = document.getElementById('modalClose');
+  const cancelBtn = document.getElementById('cancelDelete');
+  const confirmBtn = document.getElementById('confirmDelete');
 
-      orders.forEach((order) => {
-        const li = document.createElement('li');
-        const img = document.createElement('img');
-        img.src = order.assignee.avatar;
-        img.alt = order.assignee.name;
-        img.width = 40;
-        img.style.verticalAlign = 'middle';
-        img.style.marginRight = '10px';
+  let orderIdToDelete = null;
 
-        li.appendChild(img);
+  getOrders();
 
-        const text = document.createElement('span');
-        text.textContent = `${order.title} — ${order.customerName} (${order.status})`;
-        li.appendChild(text);
+  //получение заказов
+  function getOrders() {
+    fetch(`${API}/orders`)
+      .then((res) => res.json())
+      .then((orders) => {
+        ordersList.innerHTML = '';
 
-        const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Удалить';
-        deleteBtn.onclick = () => deleteOrder(order.id);
+        orders.forEach((order) => {
+          const card = document.createElement('li');
+          card.className = 'order-card';
 
-        const editBtn = document.createElement('button');
-        editBtn.textContent = 'Изменить статус';
-        editBtn.style.marginRight = '5px';
-        editBtn.onclick = () => updateOrderStatus(order.id, order);
+          const avatar = document.createElement('img');
+          avatar.src = order.assignee.avatar;
+          avatar.alt = order.assignee.name;
+          avatar.width = 40;
 
-        li.appendChild(deleteBtn);
-        li.appendChild(editBtn);
+          card.appendChild(avatar);
 
-        ordersList.appendChild(li);
+          const title = document.createElement('h3');
+          title.textContent = order.title;
+
+          const description = document.createElement('p');
+          description.textContent = order.description;
+
+          const customer = document.createElement('p');
+          customer.textContent = `Заказчик: ${order.customerName}`;
+
+          const assignee = document.createElement('p');
+          assignee.textContent = `Исполнитель: ${order.assignee.name}`;
+
+          const status = document.createElement('p');
+          status.textContent = `Статус: ${order.status}`;
+
+          const reward = document.createElement('p');
+          reward.textContent = `Награда: $${order.reward}`;
+
+          const deadline = document.createElement('p');
+          deadline.textContent = `Дедлайн: ${order.deadline}`;
+
+          const createdAt = document.createElement('p');
+          createdAt.textContent = `Создан: ${order.createdAt}`;
+
+          card.appendChild(
+            title,
+            description,
+            customer,
+            assignee,
+            status,
+            reward,
+            deadline,
+            createdAt,
+          );
+
+          const deleteBtn = document.createElement('button');
+          deleteBtn.textContent = 'Удалить';
+          deleteBtn.addEventListener('click', () => {
+            orderIdToDelete = order.id;
+            openModal();
+          });
+
+          const editBtn = document.createElement('button');
+          editBtn.textContent = 'Изменить статус';
+          editBtn.style.marginRight = '5px';
+          editBtn.addEventListener('click', () => updateOrderStatus(order));
+
+          card.appendChild(deleteBtn);
+          card.appendChild(editBtn);
+
+          ordersList.appendChild(card);
+        });
       });
+  }
+
+  //удаление заказа
+  function deleteOrder() {
+    if (orderIdToDelete === null) return;
+
+    fetch(`${API}/orders/${orderIdToDelete}`, {
+      method: 'DELETE',
+    }).then(() => {
+      closeModal();
+      getOrders();
     });
-}
-//get
-function getOrderById(id) {
-  return fetch(`${API}/orders/${id}`).then((res) => res.json());
-}
+  }
 
-//удаление заказа
-function deleteOrder(id) {
-  fetch(`${API}/orders/${id}`, {
-    method: 'DELETE',
-  }).then(() => getOrders());
-}
+  function openModal() {
+    modal.classList.remove('hidden');
+  }
 
-//put
-function updateOrderStatus(id, order) {
-  const newStatus = prompt('Введите новый статус заказа:', order.status);
+  function closeModal() {
+    modal.classList.add('hidden');
+    orderIdToDelete = null;
+  }
 
-  if (!newStatus) return;
+  //put
+  function updateOrderStatus(id, order) {
+    const newStatus = prompt('Введите новый статус заказа:', order.status);
 
-  const updatedOrder = { ...order, status: newStatus };
+    if (!newStatus) return;
 
-  fetch(`${API}/orders/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(updatedOrder),
-  }).then(() => getOrders());
-}
+    const updatedOrder = { ...order, status: newStatus };
 
-//загрузка заказов при старте
-getOrders();
+    fetch(`${API}/orders/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedOrder),
+    }).then(() => getOrders());
+  }
+
+  //загрузка заказов при старте
+  getOrders();
+});

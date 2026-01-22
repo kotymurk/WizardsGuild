@@ -11,5 +11,21 @@
     <h1>Список заказов</h1>
 
     <ul id="orders"></ul>
+
+    <div class="my-modal hidden" id="confirmModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Удаление заметки</h3>
+          <button class="icon-btn" id="modalClose">✕</button>
+        </div>
+
+        <p>Вы действительно хотите удалить заметку?</p>
+
+        <div class="modal-actions">
+          <button class="icon-btn" id="cancelDelete">Отмена</button>
+          <button class="icon-btn" id="confirmDelete">Удалить</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

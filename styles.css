@@ -23,7 +23,6 @@ li {
 }
 
 li {
-  margin-bottom: 10px;
   border: 1px solid #674e45;
   text-align: start;
 }
@@ -51,12 +50,21 @@ body {
   text-align: center;
 }
 
+#orders {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .order-card {
   background: #fff;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   margin-bottom: 15px;
+  width: calc(50% - 10px);
 }
 
 .order-card img {
@@ -81,10 +89,14 @@ button {
   background: #ffb4b4f7;
   color: #fff;
   margin-top: 10px;
+  transition:
+    background 0.3s ease,
+    transform 0.2s ease;
 }
 
 button:hover {
   background: #ff7b7bf7;
+  transform: translateY(-2px);
 }
 
 /* .icon-btn {
@@ -92,6 +104,10 @@ button:hover {
   color: #333;
   font-size: 18px;
 } */
+
+.my-modal.hidden {
+  display: none;
+}
 
 .hidden {
   display: none;
@@ -108,10 +124,12 @@ button:hover {
 }
 
 .modal-content {
+  position: relative;
   background: #fff;
   padding: 20px;
   border-radius: 8px;
   width: 300px;
+  z-index: 1001;
 }
 
 .modal-header {

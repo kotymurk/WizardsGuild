@@ -1,21 +1,6 @@
 {
   "orders": [
     {
-      "id": "5",
-      "title": "Починка магического барьера",
-      "description": "Защитный барьер стал пропускать духов и нежить в пригород.",
-      "customerName": "Совет магов",
-      "reward": 3000,
-      "status": "готов",
-      "deadline": "2025-03-10",
-      "createdAt": "2024-12-24T11:00:00Z",
-      "assignee": {
-        "id": 4,
-        "name": "Мерлин",
-        "avatar": "https://i.postimg.cc/k5HcBZ30/image.webp"
-      }
-    },
-    {
       "id": "6",
       "title": "Создание летающего корабля",
       "description": "Требуется наложить заклинания левитации на морское судно.",
@@ -718,21 +703,6 @@
         "id": 1,
         "name": "Люциус",
         "avatar": "https://i.postimg.cc/KzK0fbDc/image.webp"
-      }
-    },
-    {
-      "id": "55",
-      "title": "Снятие сглаза с наследника",
-      "description": "Тёмные колдуны угрожают сорвать коронацию принца сильным проклятием.",
-      "customerName": "Король Альберт",
-      "reward": 4300,
-      "status": "отменён",
-      "deadline": "2025-02-28",
-      "createdAt": "2025-02-12T07:00:00Z",
-      "assignee": {
-        "id": 4,
-        "name": "Мерлин",
-        "avatar": "https://i.postimg.cc/k5HcBZ30/image.webp"
       }
     },
     {

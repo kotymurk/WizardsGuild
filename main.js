@@ -3,7 +3,7 @@ const API = 'http://localhost:4000';
 document.addEventListener('DOMContentLoaded', () => {
   const ordersList = document.getElementById('orders');
 
-  //модалочка
+  //модалочка удаления
   const modal = document.getElementById('confirmModal');
   const closeBtn = document.getElementById('modalClose');
   const cancelBtn = document.getElementById('cancelDelete');
@@ -11,80 +11,71 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let orderIdToDelete = null;
 
-  getOrders();
+  //модалка редактирования
+
+  const editModal = document.getElementById('edit-modal');
+  const editTitleInput = document.getElementById('edit-title');
+  const editDescriptionInput = document.getElementById('edit-description');
+  const saveStatusInput = document.getElementById('save-edit');
+  const cancelStatusInput = document.getElementById('cancel-edit');
+
+  let orders = [];
+  let currentOrders = null;
 
   //получение заказов
   function getOrders() {
     fetch(`${API}/orders`)
       .then((res) => res.json())
-      .then((orders) => {
-        ordersList.innerHTML = '';
-
-        orders.forEach((order) => {
-          const card = document.createElement('li');
-          card.className = 'order-card';
-
-          const avatar = document.createElement('img');
-          avatar.src = order.assignee.avatar;
-          avatar.alt = order.assignee.name;
-          avatar.width = 40;
-
-          card.appendChild(avatar);
-
-          const title = document.createElement('h3');
-          title.textContent = order.title;
-
-          const description = document.createElement('p');
-          description.textContent = order.description;
-
-          const customer = document.createElement('p');
-          customer.textContent = `Заказчик: ${order.customerName}`;
-
-          const assignee = document.createElement('p');
-          assignee.textContent = `Исполнитель: ${order.assignee.name}`;
-
-          const status = document.createElement('p');
-          status.textContent = `Статус: ${order.status}`;
-
-          const reward = document.createElement('p');
-          reward.textContent = `Награда: $${order.reward}`;
-
-          const deadline = document.createElement('p');
-          deadline.textContent = `Дедлайн: ${order.deadline}`;
-
-          const createdAt = document.createElement('p');
-          createdAt.textContent = `Создан: ${order.createdAt}`;
-
-          card.appendChild(
-            title,
-            description,
-            customer,
-            assignee,
-            status,
-            reward,
-            deadline,
-            createdAt,
-          );
-
-          const deleteBtn = document.createElement('button');
-          deleteBtn.textContent = 'Удалить';
-          deleteBtn.addEventListener('click', () => {
-            orderIdToDelete = order.id;
-            openModal();
-          });
-
-          const editBtn = document.createElement('button');
-          editBtn.textContent = 'Изменить статус';
-          editBtn.style.marginRight = '5px';
-          editBtn.addEventListener('click', () => updateOrderStatus(order));
-
-          card.appendChild(deleteBtn);
-          card.appendChild(editBtn);
-
-          ordersList.appendChild(card);
-        });
+      .then((data) => {
+        orders = data;
+        renderOrders();
       });
   }
+
+  function renderOrders() {
+    ordersList.innerHTML = '';
+    orders.forEach((order) => {
+      const card = document.createElement('li');
+      card.className = 'order-card';
+
+      card.innerHTML = `
+          <img src="${order.assignee.avatar}" alt="${order.assignee.name}" width="40" />
+          <h3>${order.title}</h3>
+          <p>${order.description}</p>
+          <p>Заказчик: ${order.customerName}</p>
+          <p>Исполнитель: ${order.assignee.name}</p>
+          <p>Статус: ${order.status}</p>
+          <p>Награда: $${order.reward}</p>
+          <p>Дедлайн: ${order.deadline}</p>
+          <p>Создан: ${order.createdAt}</p>
+          <button class="edit-btn" data-id="${order.id}">Редактировать</button>
+          <button class="status-btn" data-id="${order.id}">Изменить статус</button>
+          <button class="delete-btn" data-id="${order.id}">Удалить</button>
+        `;
+      ordersList.appendChild(card);
+    });
+  }
+
+  ordersList.addEventListener('click', (e) => {
+    const id = e.target.dataset.id;
+    const order = orders.find((o) => o.id == id);
+
+    if (e.target.classList.contains('edit-btn')) {
+      currentOrders = order;
+      editTitleInput.value = order.title;
+      editDescriptionInput.value = order.description;
+      editModal.classList.remove('hidden');
+    }
+
+    if (e.target.classList.contains('delete-btn')) {
+      orderIdToDelete = order.id;
+      modal.classList.remove('hidden');
+    }
+
+    if (e.target.classList.contains('status-btn')) {
+      updateOrderStatus(order);
+    }
+  });
 
   //удаление заказа
   function deleteOrder() {
@@ -98,24 +89,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function openModal() {
-    modal.classList.remove('hidden');
-  }
-
   function closeModal() {
     modal.classList.add('hidden');
     orderIdToDelete = null;
   }
 
   //put
-  function updateOrderStatus(id, order) {
+  function updateOrderStatus(order) {
     const newStatus = prompt('Введите новый статус заказа:', order.status);
 
     if (!newStatus) return;
 
     const updatedOrder = { ...order, status: newStatus };
 
-    fetch(`${API}/orders/${id}`, {
+    fetch(`${API}/orders/${order.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -126,4 +113,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //загрузка заказов при старте
   getOrders();
+
+  //сохранение изменений в модалке редактирования
+  saveStatusInput.addEventListener('click', () => {
+    if (!currentOrders) return;
+
+    const updatedOrder = {
+      ...currentOrders,
+      title: editTitleInput.value,
+      description: editDescriptionInput.value,
+    };
+
+    fetch(`${API}/orders/${currentOrders.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedOrder),
+    }).then(() => {
+      editModal.classList.add('hidden');
+      currentOrders = null;
+      getOrders();
+    });
+  });
+
+  //отмена редактирования
+  cancelStatusInput.addEventListener('click', () => {
+    editModal.classList.add('hidden');
+    currentOrders = null;
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  cancelBtn.addEventListener('click', closeModal);
+  confirmBtn.addEventListener('click', deleteOrder);
 });

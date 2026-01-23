@@ -89,14 +89,11 @@ button {
   background: #ffb4b4f7;
   color: #fff;
   margin-top: 10px;
-  transition:
-    background 0.3s ease,
-    transform 0.2s ease;
+  transition: background 0.3s ease;
 }
 
 button:hover {
   background: #ff7b7bf7;
-  transform: translateY(-2px);
 }
 
 /* .icon-btn {

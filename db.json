@@ -1,66 +1,6 @@
 {
   "orders": [
     {
-      "id": "6",
-      "title": "Создание летающего корабля",
-      "description": "Требуется наложить заклинания левитации на морское судно.",
-      "customerName": "Капитан Флинт",
-      "reward": 5000,
-      "status": "новый",
-      "deadline": "2025-04-25",
-      "createdAt": "2024-12-25T08:00:00Z",
-      "assignee": {
-        "id": 2,
-        "name": "Гендальф",
-        "avatar": "https://i.postimg.cc/k5GsMCZN/image.webp"
-      }
-    },
-    {
-      "id": "7",
-      "title": "Лечение магической болезни",
-      "description": "Жителей деревни поражает редкая лихорадка, нужен сильный целитель.",
-      "customerName": "Староста Нортон",
-      "reward": 700,
-      "status": "новый",
-      "deadline": "2025-01-30",
-      "createdAt": "2024-12-26T10:10:00Z",
-      "assignee": {
-        "id": 7,
-        "name": "Фрея",
-        "avatar": "https://i.postimg.cc/RFjXbYg7/image.webp"
-      }
-    },
-    {
-      "id": "8",
-      "title": "Поиск пропавшего артефакта",
-      "description": "Древний магический амулет украден из храма, нужно найти воров.",
-      "customerName": "Настоятель храма",
-      "reward": 1500,
-      "status": "новый",
-      "deadline": "2025-02-01",
-      "createdAt": "2024-12-27T09:45:00Z",
-      "assignee": {
-        "id": 3,
-        "name": "Ивеус",
-        "avatar": "https://i.postimg.cc/J4CpN9Dm/image.webp"
-      }
-    },
-    {
-      "id": "9",
-      "title": "Защита деревни от орды гоблинов",
-      "description": "Гоблины нападали по ночам, нужны оборонительные магические руны.",
-      "customerName": "Старейшина Морт",
-      "reward": 1100,
-      "status": "новый",
-      "deadline": "2025-03-05",
-      "createdAt": "2024-12-28T12:05:00Z",
-      "assignee": {
-        "id": 1,
-        "name": "Люциус",
-        "avatar": "https://i.postimg.cc/KzK0fbDc/image.webp"
-      }
-    },
-    {
       "id": "10",
       "title": "Снятие сглаза с наследника",
       "description": "Наследник короля проклят, нужно снять проклятие до совершеннолетия.",

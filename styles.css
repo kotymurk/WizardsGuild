@@ -11,8 +11,7 @@ input:focus {
   outline: none;
 }
 
-a,
-p {
+a {
   text-decoration: none;
 }
 
@@ -96,20 +95,6 @@ button:hover {
   background: #ff7b7bf7;
 }
 
-/* .icon-btn {
-  background: none;
-  color: #333;
-  font-size: 18px;
-} */
-
-.my-modal.hidden {
-  display: none;
-}
-
-.hidden {
-  display: none;
-}
-
 .my-modal {
   position: fixed;
   inset: 0;
@@ -128,7 +113,9 @@ button:hover {
   width: 300px;
   z-index: 1001;
 }
-
+.hidden {
+  display: none !important;
+}
 .modal-header {
   display: flex;
   justify-content: space-around;
@@ -141,4 +128,12 @@ button:hover {
   justify-content: space-between;
   gap: 10px;
   margin-top: 20px;
+}
+
+#edit-title,
+#edit-description {
+  width: 100%;
+  padding: 8px;
+  text-align: center;
+  resize: none;
 }

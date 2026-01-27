@@ -15,11 +15,11 @@
     <div class="my-modal hidden" id="confirmModal">
       <div class="modal-content">
         <div class="modal-header">
-          <h3>Удаление заметки</h3>
+          <h3>Удаление заказа</h3>
           <button class="icon-btn" id="modalClose">✕</button>
         </div>
 
-        <p>Вы действительно хотите удалить заметку?</p>
+        <p>Вы действительно хотите удалить заказ?</p>
 
         <div class="modal-actions">
           <button class="icon-btn" id="cancelDelete">Отмена</button>
@@ -36,6 +36,23 @@
         <div class="modal-actions">
           <button id="save-edit">Сохранить</button>
           <button id="cancel-edit">Отмена</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="edit-status" class="my-modal hidden">
+      <div class="modal-content">
+        <h2>Редактировать статус заказа</h2>
+        <select id="status-select">
+          <option value="">Выберите статус</option>
+          <option value="new">Новый</option>
+          <option value="in_progress">В процессе</option>
+          <option value="completed">Завершен</option>
+        </select>
+
+        <div class="modal-actions">
+          <button id="save-status">Сохранить</button>
+          <button id="cancel-status">Отмена</button>
         </div>
       </div>
     </div>

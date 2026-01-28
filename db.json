@@ -1,24 +1,9 @@
 {
   "orders": [
     {
-      "id": "10",
-      "title": "Снятие сглаза с наследника",
-      "description": "Наследник короля проклят, нужно снять проклятие до совершеннолетия.",
-      "customerName": "Королевская семья",
-      "reward": 4000,
-      "status": "новый",
-      "deadline": "2025-02-20",
-      "createdAt": "2024-12-29T07:00:00Z",
-      "assignee": {
-        "id": 4,
-        "name": "Мерлин",
-        "avatar": "https://i.postimg.cc/k5HcBZ30/image.webp"
-      }
-    },
-    {
       "id": "11",
-      "title": "Открытие портала в параллельный мир",
-      "description": "Требуется короткое открытие портала для дипломатической миссии.",
+      "title": "gegege",
+      "description": "egegegeg",
       "customerName": "Князь Астрид",
       "reward": 3500,
       "status": "новый",

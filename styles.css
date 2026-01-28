@@ -136,4 +136,19 @@ button:hover {
   padding: 8px;
   text-align: center;
   resize: none;
+  border: 1px solid #674e45;
+  border-radius: 8px;
+  margin: 10px;
+}
+
+#status-select {
+  border: 1px solid #674e45;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.error {
+  color: #e75946;
+  font-size: 12px;
+  margin-top: 4px;
 }

@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const editDescriptionInput = document.getElementById('edit-description');
   const editSaveBtn = document.getElementById('save-edit');
   const editCancelBtn = document.getElementById('cancel-edit');
+  const editTitleError = document.getElementById('title-error');
+  const editDescriptionError = document.getElementById('description-error');
 
   //модалка редактирования статуса
   const statusModal = document.getElementById('edit-status');
@@ -41,7 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
     !statusModal ||
     !statusSelect ||
     !statusSaveBtn ||
-    !statusCancelBtn
+    !statusCancelBtn ||
+    !editTitleError ||
+    !editDescriptionError
   ) {
     console.error('Один или несколько элементов модалок не найдены!');
     return;
@@ -121,6 +125,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.classList.contains('edit-btn')) {
       editTitleInput.value = order.title;
       editDescriptionInput.value = order.description;
+
+      editTitleError.textContent = '';
+      editDescriptionError.textContent = '';
+
       editModal.classList.remove('hidden');
     }
 
@@ -144,6 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function closeEditModal() {
     editModal.classList.add('hidden');
     currentOrder = null;
+
+    editTitleError.textContent = '';
+    editDescriptionError.textContent = '';
   }
 
   function closeStatusModal() {
@@ -157,6 +168,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   editCancelBtn.addEventListener('click', closeEditModal);
   statusCancelBtn.addEventListener('click', closeStatusModal);
+
+  //убираем ошибки при вводе текста
+  editTitleInput.addEventListener('input', () => {
+    editTitleError.textContent = '';
+  });
+
+  editDescriptionInput.addEventListener('input', () => {
+    editDescriptionError.textContent = '';
+  });
 
   // Подтверждение удаления
   deleteConfirmBtn.addEventListener('click', async () => {
@@ -180,15 +200,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const title = editTitleInput.value.trim();
     const description = editDescriptionInput.value.trim();
 
+    editTitleError.textContent = '';
+    editDescriptionError.textContent = '';
+
+    let hasError = false;
+
     if (!title) {
-      alert('Введите название заказа!');
-      return;
+      editTitleError.textContent = 'Введите название заказа!';
+      hasError = true;
     }
 
     if (!description) {
-      alert('Введите описание заказа!');
-      return;
+      editDescriptionError.textContent = 'Введите описание заказа!';
+      hasError = true;
     }
+
+    if (hasError) return;
 
     updateOrder({ title, description }, closeEditModal);
   });
